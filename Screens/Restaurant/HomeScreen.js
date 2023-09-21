@@ -30,12 +30,13 @@ const HomeScreen = () => {
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Image
                 style={{
-                  width: SPACING * 4.5,
-                  height: SPACING * 4.5,
+                  width: SPACING * 6,
+                  height: SPACING * 6,
                   borderRadius: SPACING * 3,
                   marginRight: SPACING,
+                  marginTop: 13,
                 }}
-                source={require("../../assets/restaurant/avatar.jpg")}
+                source={require("../../assets/restaurant/me.png")}
               />
               <Text
                 style={{
@@ -44,7 +45,7 @@ const HomeScreen = () => {
                   color: colors.dark,
                 }}
               >
-                Erikaasav
+                Mpho Chuene
               </Text>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -155,7 +156,7 @@ const HomeScreen = () => {
                   Today discount {item.discount}
                 </Text>
                 <Text style={{ fontSize: SPACING * 2, fontWeight: "700" }}>
-                  $ {item.price}
+                  R {item.price}
                 </Text>
               </TouchableOpacity>
             ))}

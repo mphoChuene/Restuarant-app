@@ -50,7 +50,7 @@ const recipes = [
     id: 3,
     name: "Labore anim eiusmod",
     discount: "10%",
-    price: 19,
+    price: 190,
     image: require("../../assets/restaurant/pexels-cottonbro-3297801.jpg"),
     ingredients,
     description:
