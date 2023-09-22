@@ -45,7 +45,7 @@ const WelcomeScreen = () => {
               fontSize: SPACING * 1.7,
             }}
           >
-            Dolore reprehenderit id ea eu voluptate deserunt occaecat occaecat.
+            Order you favourites including exotic dishes and drinks.
           </Text>
           <TouchableOpacity
             style={{
@@ -63,7 +63,7 @@ const WelcomeScreen = () => {
                 fontWeight: "700",
               }}
             >
-              Explorer Now
+              Order Now
             </Text>
           </TouchableOpacity>
         </View>
