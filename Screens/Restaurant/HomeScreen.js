@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Image,
   SafeAreaView,
@@ -9,17 +10,20 @@ import {
   View,
   Dimensions,
 } from "react-native";
-import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+
 import SPACING from "../../config/SPACING";
 import colors from "../../config/Restaurant/colors";
 import DATA from "../../config/Restaurant/DATA";
-const { width } = Dimensions.get("window");
 
+const { width } = Dimensions.get("window");
 const ITEM_WIDTH = width / 2 - SPACING * 3;
 
 const HomeScreen = () => {
   const [activeCategory, setActiveCategory] = useState(0);
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView>
       <ScrollView>
@@ -128,7 +132,11 @@ const HomeScreen = () => {
               <TouchableOpacity
                 style={{ width: ITEM_WIDTH, marginBottom: SPACING * 2 }}
                 key={item.id}
+                onPress={() =>
+                  navigation.navigate("ProductDetails", { product: item })
+                }
               >
+                {/* Product Display */}
                 <Image
                   style={{
                     width: "100%",
