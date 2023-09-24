@@ -1,3 +1,4 @@
+import React from "react";
 import {
   ImageBackground,
   StyleSheet,
@@ -5,11 +6,18 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import { useNavigation } from "@react-navigation/native"; // Import the navigation hook
 import colors from "../../config/Restaurant/colors";
 import SPACING from "../../config/SPACING";
 
 const WelcomeScreen = () => {
+  const navigation = useNavigation(); // Initialize the navigation hook
+
+  const handleOrderNow = () => {
+    // Navigate to the HomeScreen when the button is clicked
+    navigation.navigate("Home");
+  };
+
   return (
     <ImageBackground
       style={{ flex: 1 }}
@@ -45,7 +53,7 @@ const WelcomeScreen = () => {
               fontSize: SPACING * 1.7,
             }}
           >
-            Order you favourites including exotic dishes and drinks.
+            Order your favorites including exotic dishes and drinks.
           </Text>
           <TouchableOpacity
             style={{
@@ -55,6 +63,7 @@ const WelcomeScreen = () => {
               alignItems: "center",
               marginTop: SPACING * 3,
             }}
+            onPress={handleOrderNow} // Call handleOrderNow when the button is pressed
           >
             <Text
               style={{

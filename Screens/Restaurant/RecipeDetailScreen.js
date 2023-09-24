@@ -15,8 +15,6 @@ import * as Animatable from "react-native-animatable";
 
 import SPACING from "../../config/SPACING";
 import colors from "../../config/Restaurant/colors";
-import recipes from "../../config/Restaurant/Recipes";
-// import DATA from "../../config/Restaurant/DATA";
 
 const { height } = Dimensions.get("window");
 
@@ -24,18 +22,19 @@ const RecipeDetailScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { recipe } = route.params;
-  const [orderReceived, setOrderReceived] = useState(false);
+  const [showTick, setShowTick] = useState(false);
 
   const handleOrderPress = () => {
     // Handle order processing logic here
     // For example, send the order to a server
     // Once the order is received, setOrderReceived(true);
-    setOrderReceived(true);
+    setShowTick(true);
 
     // Animate the message for a few seconds and then hide it
     setTimeout(() => {
-      setOrderReceived(false);
-    }, 3000); // Adjust the time as needed
+      setShowTick(false);
+      navigation.navigate("Home");
+    }, 1000); // Adjust the time as needed
   };
 
   return (
@@ -52,36 +51,7 @@ const RecipeDetailScreen = () => {
               justifyContent: "space-between",
             }}
             source={recipe.image}
-          >
-            {/* <TouchableOpacity
-              style={{
-                height: SPACING * 4.5,
-                width: SPACING * 4.5,
-                backgroundColor: colors.white,
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: SPACING * 2.5,
-              }}
-            >
-              <Ionicons
-                name="arrow-back"
-                size={SPACING * 2.5}
-                color={colors.gray}
-              />
-            </TouchableOpacity> */}
-            {/* <TouchableOpacity
-              style={{
-                height: SPACING * 4.5,
-                width: SPACING * 4.5,
-                backgroundColor: colors.white,
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: SPACING * 2.5,
-              }}
-            >
-              <Ionicons name="share" size={SPACING * 2.5} color={colors.gray} />
-            </TouchableOpacity> */}
-          </ImageBackground>
+          ></ImageBackground>
           <View
             style={{
               padding: SPACING * 2,
@@ -306,7 +276,7 @@ const RecipeDetailScreen = () => {
                 fontWeight: "700",
               }}
             >
-              Choose this for
+              Place order for
             </Text>
             <Text
               style={{
@@ -322,12 +292,12 @@ const RecipeDetailScreen = () => {
         </View>
       </SafeAreaView>
 
-      {orderReceived && (
+      {showTick && (
         <Animatable.View
-          animation="fadeIn"
-          style={styles.orderReceivedContainer}
+          animation="bounceIn" // You can choose any animation you prefer
+          style={styles.tickContainer}
         >
-          <Text style={styles.orderReceivedText}>Order Received!</Text>
+          <Ionicons name="checkmark-circle" size={SPACING * 20} color="green" />
         </Animatable.View>
       )}
     </>
@@ -335,21 +305,17 @@ const RecipeDetailScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  orderReceivedContainer: {
+  tickContainer: {
     position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.8)",
+    top: "25%",
+    left: "25%",
+    transform: [{ translateX: -SPACING * 2.5 }, { translateY: -SPACING * 2.5 }],
+    backgroundColor: "white", // Set the background color to green
+    borderRadius: SPACING * 5,
+    padding: SPACING * 2,
     zIndex: 1000,
-  },
-  orderReceivedText: {
-    fontSize: SPACING * 2,
-    color: colors.white,
-    fontWeight: "700",
+    alignItems: "center", // Center the content horizontally
+    justifyContent: "center", // Center the content vertically
   },
 });
 
