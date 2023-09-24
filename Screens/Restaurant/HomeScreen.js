@@ -133,7 +133,7 @@ const HomeScreen = () => {
                 style={{ width: ITEM_WIDTH, marginBottom: SPACING * 2 }}
                 key={item.id}
                 onPress={() =>
-                  navigation.navigate("ProductDetails", { product: item })
+                  navigation.navigate("ProductDetails", { recipe: item })
                 }
               >
                 {/* Product Display */}

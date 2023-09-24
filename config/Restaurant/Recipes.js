@@ -106,7 +106,7 @@ const recipes = [
     id: 7,
     name: "Dolore elit",
     discount: "10%",
-    price: 43,
+    price: 210,
     image: require("../../assets/restaurant/pexels-valeria-boltneva-10297212.jpg"),
     ingredients,
     description:
@@ -120,7 +120,7 @@ const recipes = [
     id: 8,
     name: "Magna Lorem",
     discount: "45%",
-    price: 21,
+    price: 195,
     image: require("../../assets/restaurant/nadine-primeau--ftWfohtjNw-unsplash.jpeg"),
     ingredients,
     description:
