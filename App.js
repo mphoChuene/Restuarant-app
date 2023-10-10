@@ -4,13 +4,17 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./Screens/Restaurant/HomeScreen";
 import WelcomeScreen from "./Screens/Restaurant/WelcomeScreen";
 import RecipeDetailScreen from "./Screens/Restaurant/RecipeDetailScreen";
+import LoginScreen from "./Screens/Restaurant/LoginScreen";
+import RegisterScreen from "./Screens/Restaurant/RegisterScreen";
 
 const HomeStack = createStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <HomeStack.Navigator initialRouteName="welcomeScreen">
+      <HomeStack.Navigator initialRouteName="Login">
+        <HomeStack.Screen name="Login" component={LoginScreen} />
+        <HomeStack.Screen name="Register" component={RegisterScreen} />
         <HomeStack.Screen name="welcomeScreen" component={WelcomeScreen} />
         <HomeStack.Screen name="Home" component={HomeScreen} />
         <HomeStack.Screen
