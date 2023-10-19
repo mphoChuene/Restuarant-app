@@ -1,6 +1,7 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import CartPage from "./Screens/Restaurant/Cart";
 import HomeScreen from "./Screens/Restaurant/HomeScreen";
 import WelcomeScreen from "./Screens/Restaurant/WelcomeScreen";
 import RecipeDetailScreen from "./Screens/Restaurant/RecipeDetailScreen";
@@ -17,6 +18,7 @@ const App = () => {
         <HomeStack.Screen name="Register" component={RegisterScreen} />
         <HomeStack.Screen name="welcomeScreen" component={WelcomeScreen} />
         <HomeStack.Screen name="Home" component={HomeScreen} />
+        <HomeStack.Screen name="Cart" component={CartPage} />
         <HomeStack.Screen
           name="ProductDetails"
           component={RecipeDetailScreen}

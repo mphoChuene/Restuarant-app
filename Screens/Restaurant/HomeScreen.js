@@ -53,18 +53,16 @@ const HomeScreen = () => {
               </Text>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <TouchableOpacity style={{ marginRight: SPACING }}>
-                <Ionicons
-                  name="notifications-outline"
-                  size={SPACING * 3.5}
-                  color={colors.dark}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Ionicons
-                  name="menu"
-                  size={SPACING * 3.5}
-                  color={colors.dark}
+              <TouchableOpacity
+                style={{ marginRight: SPACING }}
+                onPress={() => navigation.navigate("Cart")} // Navigate to the CartPage screen
+              >
+                <Image
+                  style={{
+                    width: SPACING * 3.5,
+                    height: SPACING * 3.5,
+                  }}
+                  source={require("../../assets/restaurant/shopping-cart.png")} // Replace with your cart image
                 />
               </TouchableOpacity>
             </View>

@@ -18,23 +18,63 @@ import colors from "../../config/Restaurant/colors";
 
 const { height } = Dimensions.get("window");
 
-const RecipeDetailScreen = () => {
+const RecipeDetailScreen = ({ route }) => {
   const navigation = useNavigation();
-  const route = useRoute();
   const { recipe } = route.params;
+
   const [showTick, setShowTick] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+
+  // Define your cart state using useState
+  const [cartItems, setCartItems] = useState([]);
+
+  const addToCart = (item) => {
+    // Check if the item is already in the cart
+    const existingItem = cartItems.find((cartItem) => cartItem.id === item.id);
+
+    if (existingItem) {
+      // If the item exists in the cart, update its quantity
+      setCartItems((prevCartItems) => {
+        return prevCartItems.map((cartItem) => {
+          if (cartItem.id === item.id) {
+            return { ...cartItem, quantity: cartItem.quantity + item.quantity };
+          }
+          return cartItem;
+        });
+      });
+    } else {
+      // If the item is not in the cart, add it
+      setCartItems((prevCartItems) => [...prevCartItems, item]);
+    }
+  };
 
   const handleOrderPress = () => {
-    // Handle order processing logic here
-    // For example, send the order to a server
-    // Once the order is received, setOrderReceived(true);
+    const itemInCart = {
+      id: recipe.id,
+      name: recipe.name,
+      price: recipe.price,
+      image: recipe.image,
+      quantity: quantity,
+    };
+
+    addToCart(itemInCart); // Add the item to the cart
+
     setShowTick(true);
 
-    // Animate the message for a few seconds and then hide it
     setTimeout(() => {
       setShowTick(false);
       navigation.navigate("Home");
-    }, 1000); // Adjust the time as needed
+    }, 1000);
+  };
+
+  const increaseQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
   };
 
   return (
@@ -293,10 +333,7 @@ const RecipeDetailScreen = () => {
       </SafeAreaView>
 
       {showTick && (
-        <Animatable.View
-          animation="bounceIn" // You can choose any animation you prefer
-          style={styles.tickContainer}
-        >
+        <Animatable.View animation="bounceIn" style={styles.tickContainer}>
           <Ionicons name="checkmark-circle" size={SPACING * 20} color="green" />
         </Animatable.View>
       )}
@@ -310,12 +347,12 @@ const styles = StyleSheet.create({
     top: "25%",
     left: "25%",
     transform: [{ translateX: -SPACING * 2.5 }, { translateY: -SPACING * 2.5 }],
-    backgroundColor: "white", // Set the background color to green
+    backgroundColor: "white",
     borderRadius: SPACING * 5,
     padding: SPACING * 2,
     zIndex: 1000,
-    alignItems: "center", // Center the content horizontally
-    justifyContent: "center", // Center the content vertically
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
