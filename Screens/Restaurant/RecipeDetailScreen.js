@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../Redux/actions/cartAction";
 import * as Animatable from "react-native-animatable";
 
 import SPACING from "../../config/SPACING";
@@ -18,35 +20,8 @@ import colors from "../../config/Restaurant/colors";
 
 const { height } = Dimensions.get("window");
 
-const RecipeDetailScreen = ({ route }) => {
-  const navigation = useNavigation();
-  const { recipe } = route.params;
-
-  const [showTick, setShowTick] = useState(false);
-  const [quantity, setQuantity] = useState(1);
-
-  // Define your cart state using useState
-  const [cartItems, setCartItems] = useState([]);
-
-  const addToCart = (item) => {
-    // Check if the item is already in the cart
-    const existingItem = cartItems.find((cartItem) => cartItem.id === item.id);
-
-    if (existingItem) {
-      // If the item exists in the cart, update its quantity
-      setCartItems((prevCartItems) => {
-        return prevCartItems.map((cartItem) => {
-          if (cartItem.id === item.id) {
-            return { ...cartItem, quantity: cartItem.quantity + item.quantity };
-          }
-          return cartItem;
-        });
-      });
-    } else {
-      // If the item is not in the cart, add it
-      setCartItems((prevCartItems) => [...prevCartItems, item]);
-    }
-  };
+const RecipeDetailScreen = ({ recipe }) => {
+  const dispatch = useDispatch();
 
   const handleOrderPress = () => {
     const itemInCart = {
@@ -57,16 +32,16 @@ const RecipeDetailScreen = ({ route }) => {
       quantity: quantity,
     };
 
-    addToCart(itemInCart); // Add the item to the cart
-
+    dispatch(addToCart(itemInCart));
     setShowTick(true);
 
     setTimeout(() => {
       setShowTick(false);
-      navigation.navigate("Home");
+
+      // Navigate to the CartScreen and pass cartItems as a parameter
+      navigation.navigate("Cart", { cartItems: cartItems });
     }, 1000);
   };
-
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
   };
@@ -149,7 +124,7 @@ const RecipeDetailScreen = ({ route }) => {
               </View>
             </View>
             <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
+              style={{ flexDirection: "row", justifyContent: "space between" }}
             >
               <View
                 style={{
@@ -326,7 +301,7 @@ const RecipeDetailScreen = ({ route }) => {
                 marginLeft: SPACING / 2,
               }}
             >
-              R {recipe.price}
+              R {recipe.price * quantity}
             </Text>
           </TouchableOpacity>
         </View>
