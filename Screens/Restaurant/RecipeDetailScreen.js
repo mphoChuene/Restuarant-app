@@ -10,38 +10,44 @@ import {
   View,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../../Redux/actions/cartAction";
+import { useNavigation } from "@react-navigation/native";
 import * as Animatable from "react-native-animatable";
-
 import SPACING from "../../config/SPACING";
 import colors from "../../config/Restaurant/colors";
 
 const { height } = Dimensions.get("window");
 
-const RecipeDetailScreen = ({ recipe }) => {
-  const dispatch = useDispatch();
+const RecipeDetailScreen = ({ route }) => {
+  const navigation = useNavigation();
+  const { recipe } = route.params;
 
-  const handleOrderPress = () => {
-    const itemInCart = {
-      id: recipe.id,
+  const [showTick, setShowTick] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+
+  // Define your cart state using useState
+  const [cartItems, setCartItems] = useState([]);
+
+  const addToCart = () => {
+    // Calculate the total price based on quantity
+    const totalPrice = recipe.price * quantity;
+
+    // Create an item object with name and total price
+    const item = {
       name: recipe.name,
-      price: recipe.price,
-      image: recipe.image,
-      quantity: quantity,
+      totalPrice,
     };
 
-    dispatch(addToCart(itemInCart));
+    // Update the cartItems state with the new item
+    setCartItems([...cartItems, item]);
+
     setShowTick(true);
 
     setTimeout(() => {
       setShowTick(false);
-
-      // Navigate to the CartScreen and pass cartItems as a parameter
       navigation.navigate("Cart", { cartItems: cartItems });
     }, 1000);
   };
+
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
   };
@@ -272,6 +278,17 @@ const RecipeDetailScreen = ({ recipe }) => {
       </ScrollView>
       <SafeAreaView>
         <View style={{ padding: SPACING * 2 }}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <TouchableOpacity onPress={decreaseQuantity}>
+              <Ionicons name="remove-circle" size={40} color={colors.black} />
+            </TouchableOpacity>
+            <Text style={{ fontSize: 24 }}>{quantity}</Text>
+            <TouchableOpacity onPress={increaseQuantity}>
+              <Ionicons name="add-circle" size={40} color={colors.black} />
+            </TouchableOpacity>
+          </View>
           <TouchableOpacity
             style={{
               width: "100%",
@@ -282,7 +299,7 @@ const RecipeDetailScreen = ({ recipe }) => {
               justifyContent: "center",
               borderRadius: SPACING * 2,
             }}
-            onPress={handleOrderPress}
+            onPress={addToCart}
           >
             <Text
               style={{
@@ -306,7 +323,6 @@ const RecipeDetailScreen = ({ recipe }) => {
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-
       {showTick && (
         <Animatable.View animation="bounceIn" style={styles.tickContainer}>
           <Ionicons name="checkmark-circle" size={SPACING * 20} color="green" />

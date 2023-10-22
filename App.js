@@ -6,30 +6,27 @@ import HomeScreen from "./Screens/Restaurant/HomeScreen";
 import WelcomeScreen from "./Screens/Restaurant/WelcomeScreen";
 import RecipeDetailScreen from "./Screens/Restaurant/RecipeDetailScreen";
 import LoginScreen from "./Screens/Restaurant/LoginScreen";
-import { Provider } from "react-redux";
-import store from "./Redux/store";
+
 import RegisterScreen from "./Screens/Restaurant/RegisterScreen";
 
 const HomeStack = createStackNavigator();
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <HomeStack.Navigator initialRouteName="Login">
-          <HomeStack.Screen name="Login" component={LoginScreen} />
-          <HomeStack.Screen name="Register" component={RegisterScreen} />
-          <HomeStack.Screen name="welcomeScreen" component={WelcomeScreen} />
-          <HomeStack.Screen name="Home" component={HomeScreen} />
-          <HomeStack.Screen name="Cart" component={CartScreen} />
-          <HomeStack.Screen
-            name="ProductDetails"
-            component={RecipeDetailScreen}
-          />
-          {/* Define other screens here if needed */}
-        </HomeStack.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <NavigationContainer>
+      <HomeStack.Navigator initialRouteName="Login">
+        {/* <HomeStack.Screen name="Login" component={LoginScreen} /> */}
+        {/* <HomeStack.Screen name="Register" component={RegisterScreen} /> */}
+        {/* <HomeStack.Screen name="welcomeScreen" component={WelcomeScreen} /> */}
+        <HomeStack.Screen name="Home" component={HomeScreen} />
+        <HomeStack.Screen name="Cart" component={CartScreen} />
+        <HomeStack.Screen
+          name="ProductDetails"
+          component={RecipeDetailScreen}
+        />
+        {/* Define other screens here if needed */}
+      </HomeStack.Navigator>
+    </NavigationContainer>
   );
 };
 
