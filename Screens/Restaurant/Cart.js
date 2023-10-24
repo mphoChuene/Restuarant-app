@@ -1,25 +1,55 @@
 import React from "react";
-import { View, Text, ScrollView, Image } from "react-native";
-import { useRoute } from "@react-navigation/native";
+import { View, Text, Button, ScrollView, StyleSheet } from "react-native";
+import { useRoute, useNavigation } from "@react-navigation/native";
 
 const CartScreen = () => {
   const route = useRoute();
   // Extract the cartItems and orders from the route params
   const { cartItems, orders } = route.params;
 
-  // Map through the orders and display them
+  // Get the navigation object
+  const navigation = useNavigation();
+
   return (
-    <ScrollView>
-      {orders.map((order, index) => (
-        <View key={index}>
-          <Text>{order.name}</Text>
-          <Text>Total Price: {order.totalPrice}</Text>
-          <Image source={{ uri: order.imageUrl }} style={{ width: 100, height: 100 }} />
-          {/* Add styling and other order details as needed */}
-        </View>
-      ))}
-    </ScrollView>
+    <View style={styles.container}>
+      <ScrollView style={styles.ordersContainer}>
+        {orders.map((order, index) => (
+          <View style={styles.orderItem} key={index}>
+            <Text style={styles.orderName}>{order.name}</Text>
+            <Text style={styles.orderTotalPrice}>Total Price: R {order.totalPrice}</Text>
+          </View>
+        ))}
+      </ScrollView>
+
+      <Button title="Checkout" onPress={payWithPaystack} />
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    justifyContent: "space-between",
+  },
+  ordersContainer: {
+    marginBottom: 16,
+  },
+  orderItem: {
+    backgroundColor: "#ffffff",
+    padding: 16,
+    marginBottom: 8,
+    borderRadius: 8,
+    elevation: 4,
+  },
+  orderName: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  orderTotalPrice: {
+    fontSize: 14,
+    color: "#888888",
+  },
+});
 
 export default CartScreen;
