@@ -1,29 +1,30 @@
 import React, { useState } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { Text, View, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth"; // Import the necessary authentication functions
+import { app } from "../../firebaseConfig"; // Import your Firebase configuration
 
 const LoginScreen = ({ navigation }) => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
-  const handleLogin = () => {
-    // Add your login logic here using 'username' and 'password' state
-    // If login is successful, you can navigate to the homepage
-    navigation.navigate("welcomeScreen");
+  const handleLogin = async () => {
+    try {
+      const auth = getAuth(app); // Obtain the auth instance
+      await signInWithEmailAndPassword(auth, email, password); // Use signInWithEmailAndPassword function
+      navigation.navigate("welcomeScreen");
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return (
     <View style={styles.container}>
       <TextInput
-        placeholder="Username"
+        placeholder="Email"
         style={styles.textInput}
-        value={username}
-        onChangeText={(text) => setUsername(text)}
+        value={email}
+        onChangeText={(text) => setEmail(text)}
       />
       <TextInput
         placeholder="Password"
@@ -32,13 +33,11 @@ const LoginScreen = ({ navigation }) => {
         value={password}
         onChangeText={(text) => setPassword(text)}
       />
+      {error && <Text style={styles.errorText}>{error}</Text>}
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.registerButton}
-        onPress={() => navigation.navigate("Register")}
-      >
+      <TouchableOpacity style={styles.registerButton} onPress={() => navigation.navigate("Register")}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
     </View>
@@ -77,6 +76,10 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontWeight: "bold",
+  },
+  errorText: {
+    color: "red",
+    marginBottom: 10,
   },
 });
 

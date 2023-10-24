@@ -81,16 +81,7 @@ const HomeScreen = () => {
               borderRadius: SPACING,
             }}
           >
-            <Ionicons name="search" color={colors.gray} size={SPACING * 2.7} />
-            <TextInput
-              placeholder="Want to .."
-              placeholderTextColor={colors.gray}
-              style={{
-                color: colors.gray,
-                fontSize: SPACING * 2,
-                marginLeft: SPACING,
-              }}
-            />
+           
           </View>
           <ScrollView horizontal>
             {DATA.map((category, index) => (

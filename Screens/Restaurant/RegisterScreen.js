@@ -1,21 +1,27 @@
 import React, { useState } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { Text, View, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import app from "../../firebaseConfig"; // Import your Firebase configuration
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState(null);
 
-  const handleRegister = () => {
-    // Add your registration logic here using 'email', 'password', and 'confirmPassword' state
-    // You can validate the password and confirm password match before proceeding
-    navigation.navigate("Login");
+  const handleRegister = async () => {
+    try {
+      if (password !== confirmPassword) {
+        setError("Passwords do not match.");
+        return;
+      }
+
+      const auth = getAuth(app); // Obtain the auth instance
+      await createUserWithEmailAndPassword(auth, email, password); // Use createUserWithEmailAndPassword from auth
+      navigation.navigate("Login");
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return (
@@ -40,6 +46,7 @@ const RegisterScreen = ({ navigation }) => {
         value={confirmPassword}
         onChangeText={(text) => setConfirmPassword(text)}
       />
+      {error && <Text style={styles.errorText}>{error}</Text>}
       <TouchableOpacity style={styles.button} onPress={handleRegister}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
@@ -85,6 +92,10 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontWeight: "bold",
+  },
+  errorText: {
+    color: "red",
+    marginBottom: 10,
   },
 });
 
