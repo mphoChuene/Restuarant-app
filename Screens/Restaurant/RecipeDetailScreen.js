@@ -21,32 +21,33 @@ const RecipeDetailScreen = ({ route }) => {
   const navigation = useNavigation();
   const { recipe } = route.params;
 
+  const [orders, setOrders] = useState([]);
   const [showTick, setShowTick] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
   // Define your cart state using useState
   const [cartItems, setCartItems] = useState([]);
 
-  const addToCart = () => {
-    // Calculate the total price based on quantity
-    const totalPrice = recipe.price * quantity;
+ const addToCart = () => {
+  // Calculate the total price based on quantity
+  const totalPrice = recipe.price * quantity;
 
-    // Create an item object with name and total price
-    const item = {
-      name: recipe.name,
-      totalPrice,
-    };
-
-    // Update the cartItems state with the new item
-    setCartItems([...cartItems, item]);
-
-    setShowTick(true);
-
-    setTimeout(() => {
-      setShowTick(false);
-      navigation.navigate("Cart", { cartItems: cartItems });
-    }, 1000);
+  // Create an item object with name, total price, and image URL
+  const order = {
+    name: recipe.name,
+    totalPrice,
+    imageUrl: recipe.image, // Replace this with the actual image URL
   };
+
+  // Add the new order to the orders array
+  setOrders([...orders, order]);
+  setShowTick(true);
+
+  setTimeout(() => {
+    setShowTick(false);
+    navigation.navigate("Cart", { cartItems, orders });
+  }, 1000);
+};
 
   const increaseQuantity = () => {
     setQuantity(quantity + 1);

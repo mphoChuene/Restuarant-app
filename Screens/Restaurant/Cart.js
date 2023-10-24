@@ -1,40 +1,24 @@
 import React from "react";
-import { View, Text, Button } from "react-native";
-import { useRoute, useNavigation } from "@react-navigation/native";
+import { View, Text, ScrollView, Image } from "react-native";
+import { useRoute } from "@react-navigation/native";
 
 const CartScreen = () => {
   const route = useRoute();
-  // Extract the cartItems from the route params
-  const { cartItems } = route.params;
+  // Extract the cartItems and orders from the route params
+  const { cartItems, orders } = route.params;
 
-  // Get the navigation object
-  const navigation = useNavigation();
-
-  const handleCheckout = () => {
-    // Navigate to the payment screen and pass cartItems
-    navigation.navigate("Payment", { cartItems });
-  };
-  console.log(cartItems); // Check if cartItems are passed correctly
-
+  // Map through the orders and display them
   return (
-    <View>
-      <Text>Cart Screen</Text>
-      {cartItems && cartItems.length > 0 ? (
-        cartItems.map((item, index) => (
-          <View key={index}>
-            <Text>Item Name: {item.name}</Text>
-            <Text>Item Price: {item.price}</Text>
-            <Text>Item Quantity: {item.quantity}</Text>
-            {/* Render other cart item details here */}
-          </View>
-        ))
-      ) : (
-        <Text>Cart is empty</Text>
-      )}
-      {cartItems && cartItems.length > 0 && (
-        <Button title="Checkout" onPress={handleCheckout} />
-      )}
-    </View>
+    <ScrollView>
+      {orders.map((order, index) => (
+        <View key={index}>
+          <Text>{order.name}</Text>
+          <Text>Total Price: {order.totalPrice}</Text>
+          <Image source={{ uri: order.imageUrl }} style={{ width: 100, height: 100 }} />
+          {/* Add styling and other order details as needed */}
+        </View>
+      ))}
+    </ScrollView>
   );
 };
 
