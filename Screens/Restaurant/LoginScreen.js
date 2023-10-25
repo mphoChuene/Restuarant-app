@@ -5,11 +5,10 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  ImageBackground,
+  Image,
 } from "react-native";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "../../firebaseConfig";
-import img from "../../assets/restaurant/pexels-ryutaro-tsukata-6249501.jpg";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -28,13 +27,28 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground source={img} style={styles.backgroundImage}>
-        <View style={styles.contentContainer}>
+      <View style={styles.textCont}>
+        <Text style={styles.welcomeTxt}>Welcome</Text>
+        <Text style={styles.welcomeTxt}>Back</Text>
+      </View>
+
+      <View style={styles.contentContainer}>
+        <View style={styles.inputContainer}>
+          <Image
+            source={require("../../assets/restaurant/email.png")}
+            style={styles.icon}
+          />
           <TextInput
             placeholder="Email"
             style={styles.textInput}
             value={email}
             onChangeText={(text) => setEmail(text)}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Image
+            source={require("../../assets/restaurant/lock.png")}
+            style={styles.icon}
           />
           <TextInput
             placeholder="Password"
@@ -43,43 +57,63 @@ const LoginScreen = ({ navigation }) => {
             value={password}
             onChangeText={(text) => setPassword(text)}
           />
-          {error && <Text style={styles.errorText}>{error}</Text>}
-          <TouchableOpacity style={styles.button} onPress={handleLogin}>
-            <Text style={styles.buttonText}>Login</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.registerButton}
-            onPress={() => navigation.navigate("Register")}
-          >
-            <Text style={styles.buttonText}>Register</Text>
-          </TouchableOpacity>
         </View>
-      </ImageBackground>
+        {error && <Text style={styles.errorText}>{error}</Text>}
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.registerButton}
+          onPress={() => navigation.navigate("Register")}>
+          <Text style={styles.buttonText}>Register</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Take up the entire screen
+    flex: 1,
+    backgroundColor: "#fff",
   },
-  backgroundImage: {
-    flex: 1, // Ensure the background image covers the whole screen
+  welcomeTxt: {
+    fontSize: 40,
+    fontWeight: "bold",
+    // position: "absolute",
+    color:'#000',
+  },
+  textCont: {
+    backgroundColor: "#fff",
   },
   contentContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 20,
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginHorizontal:25,
+  },
+  icon: {
+    width: 20,
+    height: 20,
+    marginRight: 10,
+    // marginHorizontal:40,
   },
   textInput: {
-    width: 300,
+    flex: 1,
     height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: "gray",
     marginBottom: 10,
     padding: 8,
-    borderRadius: 5, // Add rounded corners
-    backgroundColor: "white", // White background
+    backgroundColor: "white",
+
+
   },
   button: {
     backgroundColor: "blue",
