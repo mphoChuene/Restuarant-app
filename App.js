@@ -14,12 +14,12 @@ const HomeStack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-        <HomeStack.Navigator initialRouteName="Login">
-        <HomeStack.Screen name="Login" component={LoginScreen} />
-        <HomeStack.Screen name="Register" component={RegisterScreen} />
-        <HomeStack.Screen name="welcomeScreen" component={WelcomeScreen} /> 
-        <HomeStack.Screen name="Home" component={HomeScreen} />
-        <HomeStack.Screen name="Cart" component={CartScreen} />
+      <HomeStack.Navigator initialRouteName="Login">
+ <HomeStack.Screen name="Login" component={LoginScreen} />
+  {/*<HomeStack.Screen name="Register" component={RegisterScreen} />*/}
+        {/* <HomeStack.Screen name="welcomeScreen" component={WelcomeScreen} />  */}
+        {/* <HomeStack.Screen name="Home" component={HomeScreen} /> */}
+        {/* <HomeStack.Screen name="Cart" component={CartScreen} /> */}
         <HomeStack.Screen
           name="ProductDetails"
           component={RecipeDetailScreen}
