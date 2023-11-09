@@ -1,55 +1,47 @@
-import React from "react";
-import { View, Text, Button, ScrollView, StyleSheet } from "react-native";
-import { useRoute, useNavigation } from "@react-navigation/native";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
 
-const CartScreen = () => {
-  const route = useRoute();
-  // Extract the cartItems and orders from the route params
-  const { cartItems, orders } = route.params;
-
-  // Get the navigation object
-  const navigation = useNavigation();
+const Cart = () => {
+  // Use the useSelector hook to access the cart state
+  const cartItems = useSelector((state) => state.cart.cartItems);
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.ordersContainer}>
-        {orders.map((order, index) => (
-          <View style={styles.orderItem} key={index}>
-            <Text style={styles.orderName}>{order.name}</Text>
-            <Text style={styles.orderTotalPrice}>Total Price: R {order.totalPrice}</Text>
+      <Text style={styles.heading}>Cart</Text>
+      <ScrollView>
+        {cartItems.map((item, index) => (
+          <View style={styles.cartItem} key={index}>
+            <Text>Name: {item.name}</Text>
+            <Text>Total Price: R {item.totalPrice}</Text>
+            <Image source={{ uri: item.imageUrl }} style={styles.image} />
           </View>
         ))}
       </ScrollView>
-
-      <Button title="Checkout" onPress={payWithPaystack} />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    padding: 16,
     flex: 1,
-    padding: 16,
-    justifyContent: "space-between",
   },
-  ordersContainer: {
-    marginBottom: 16,
+  heading: {
+    fontSize: 24,
+    fontWeight: 'bold',
   },
-  orderItem: {
-    backgroundColor: "#ffffff",
-    padding: 16,
-    marginBottom: 8,
-    borderRadius: 8,
-    elevation: 4,
+  cartItem: {
+    marginVertical: 8,
+    borderColor: 'lightgray',
+    borderWidth: 1,
+    padding: 8,
   },
-  orderName: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  orderTotalPrice: {
-    fontSize: 14,
-    color: "#888888",
+  image: {
+    width: 100,
+    height: 100,
+    resizeMode: 'cover',
   },
 });
 
-export default CartScreen;
+export default Cart;

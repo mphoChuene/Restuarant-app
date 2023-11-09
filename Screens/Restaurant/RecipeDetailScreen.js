@@ -14,6 +14,8 @@ import { useNavigation } from "@react-navigation/native";
 import * as Animatable from "react-native-animatable";
 import SPACING from "../../config/SPACING";
 import colors from "../../config/Restaurant/colors";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../redux/cartSlice";
 
 const { height } = Dimensions.get("window");
 
@@ -21,33 +23,37 @@ const RecipeDetailScreen = ({ route }) => {
   const navigation = useNavigation();
   const { recipe } = route.params;
 
-  const [orders, setOrders] = useState([]);
   const [showTick, setShowTick] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
-  // Define your cart state using useState
-  const [cartItems, setCartItems] = useState([]);
+  const dispatch = useDispatch();
+  const handleAddToCart = () => {
+    // Ensure quantity is a positive integer
+    const quantityInt = parseInt(quantity);
+    if (quantityInt > 0) {
+      // Calculate the total price based on quantity
+      const totalPrice = recipe.price * quantityInt;
 
- const addToCart = () => {
-  // Calculate the total price based on quantity
-  const totalPrice = recipe.price * quantity;
+      // Create an item object with name, total price, and image URL
+      const order = {
+        name: recipe.name,
+        totalPrice,
+        imageUrl: recipe.image, // Replace this with the actual image URL
+      };
 
-  // Create an item object with name, total price, and image URL
-  const order = {
-    name: recipe.name,
-    totalPrice,
-    imageUrl: recipe.image, // Replace this with the actual image URL
+      // Dispatch the addToCart action to add the item to the cart
+      dispatch(addToCart(order));
+
+      setShowTick(true); // Show the checkmark animation
+      setTimeout(() => {
+        setShowTick(false);
+      }, 2000);
+      setQuantity(1); // Reset the quantity
+    } else {
+      // Handle the case where quantity is not valid (e.g., non-numeric or <= 0)
+      console.error("Invalid quantity");
+    }
   };
-
-  // Add the new order to the orders array
-  setOrders([...orders, order]);
-  setShowTick(true);
-
-  setTimeout(() => {
-    setShowTick(false);
-    navigation.navigate("Cart", { cartItems, orders });
-  }, 1000);
-};
 
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -72,8 +78,7 @@ const RecipeDetailScreen = ({ route }) => {
               flexDirection: "row",
               justifyContent: "space-between",
             }}
-            source={recipe.image}
-          ></ImageBackground>
+            source={recipe.image}></ImageBackground>
           <View
             style={{
               padding: SPACING * 2,
@@ -82,23 +87,20 @@ const RecipeDetailScreen = ({ route }) => {
               borderTopLeftRadius: SPACING * 3,
               borderTopRightRadius: SPACING * 3,
               backgroundColor: colors.white,
-            }}
-          >
+            }}>
             <View
               style={{
                 flexDirection: "row",
                 marginBottom: SPACING * 3,
                 alignItems: "center",
-              }}
-            >
+              }}>
               <View style={{ width: "70%" }}>
                 <Text
                   style={{
                     fontSize: SPACING * 3,
                     color: colors.black,
                     fontWeight: "700",
-                  }}
-                >
+                  }}>
                   {recipe.name}
                 </Text>
               </View>
@@ -111,8 +113,7 @@ const RecipeDetailScreen = ({ route }) => {
                   borderRadius: SPACING,
                   justifyContent: "center",
                   alignItems: "center",
-                }}
-              >
+                }}>
                 <Ionicons
                   name="star"
                   color={colors.black}
@@ -124,15 +125,13 @@ const RecipeDetailScreen = ({ route }) => {
                     fontWeight: "600",
                     marginLeft: SPACING / 2,
                     color: colors.black,
-                  }}
-                >
+                  }}>
                   {recipe.rating}
                 </Text>
               </View>
             </View>
             <View
-              style={{ flexDirection: "row", justifyContent: "space between" }}
-            >
+              style={{ flexDirection: "row", justifyContent: "space between" }}>
               <View
                 style={{
                   padding: SPACING,
@@ -142,8 +141,7 @@ const RecipeDetailScreen = ({ route }) => {
                   borderRadius: SPACING,
                   justifyContent: "center",
                   alignItems: "center",
-                }}
-              >
+                }}>
                 <Ionicons
                   name="time"
                   color={colors.gray}
@@ -155,8 +153,7 @@ const RecipeDetailScreen = ({ route }) => {
                     fontWeight: "600",
                     marginLeft: SPACING / 2,
                     color: colors.gray,
-                  }}
-                >
+                  }}>
                   {recipe.time}
                 </Text>
               </View>
@@ -169,8 +166,7 @@ const RecipeDetailScreen = ({ route }) => {
                   borderRadius: SPACING,
                   justifyContent: "center",
                   alignItems: "center",
-                }}
-              >
+                }}>
                 <Ionicons
                   name="bicycle"
                   color={colors.gray}
@@ -182,8 +178,7 @@ const RecipeDetailScreen = ({ route }) => {
                     fontWeight: "600",
                     marginLeft: SPACING / 2,
                     color: colors.gray,
-                  }}
-                >
+                  }}>
                   {recipe.del_time}
                 </Text>
               </View>
@@ -196,8 +191,7 @@ const RecipeDetailScreen = ({ route }) => {
                   borderRadius: SPACING,
                   justifyContent: "center",
                   alignItems: "center",
-                }}
-              >
+                }}>
                 <Ionicons
                   name="restaurant"
                   color={colors.gray}
@@ -209,8 +203,7 @@ const RecipeDetailScreen = ({ route }) => {
                     fontWeight: "600",
                     marginLeft: SPACING / 2,
                     color: colors.gray,
-                  }}
-                >
+                  }}>
                   {recipe.cooking_time}
                 </Text>
               </View>
@@ -221,8 +214,7 @@ const RecipeDetailScreen = ({ route }) => {
                   fontSize: SPACING * 2,
                   fontWeight: "700",
                   color: colors.dark,
-                }}
-              >
+                }}>
                 Ingredients
               </Text>
               {recipe.ingredients.map((ingredient) => (
@@ -232,8 +224,7 @@ const RecipeDetailScreen = ({ route }) => {
                     flexDirection: "row",
                     alignItems: "center",
                   }}
-                  key={ingredient.id}
-                >
+                  key={ingredient.id}>
                   <View
                     style={{
                       width: SPACING,
@@ -248,8 +239,7 @@ const RecipeDetailScreen = ({ route }) => {
                       fontWeight: "600",
                       color: colors.gray,
                       marginLeft: SPACING,
-                    }}
-                  >
+                    }}>
                     {ingredient.title}
                   </Text>
                 </View>
@@ -261,8 +251,7 @@ const RecipeDetailScreen = ({ route }) => {
                 fontWeight: "700",
                 color: colors.dark,
                 marginBottom: SPACING,
-              }}
-            >
+              }}>
               Description
             </Text>
             <Text
@@ -270,8 +259,7 @@ const RecipeDetailScreen = ({ route }) => {
                 fontSize: SPACING * 1.7,
                 fontWeight: "500",
                 color: colors.gray,
-              }}
-            >
+              }}>
               {recipe.description}
             </Text>
           </View>
@@ -280,8 +268,7 @@ const RecipeDetailScreen = ({ route }) => {
       <SafeAreaView>
         <View style={{ padding: SPACING * 2 }}>
           <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
+            style={{ flexDirection: "row", justifyContent: "space-between" }}>
             <TouchableOpacity onPress={decreaseQuantity}>
               <Ionicons name="remove-circle" size={40} color={colors.black} />
             </TouchableOpacity>
@@ -300,15 +287,13 @@ const RecipeDetailScreen = ({ route }) => {
               justifyContent: "center",
               borderRadius: SPACING * 2,
             }}
-            onPress={addToCart}
-          >
+            onPress={handleAddToCart}>
             <Text
               style={{
                 fontSize: SPACING * 2,
                 color: colors.white,
                 fontWeight: "700",
-              }}
-            >
+              }}>
               Place order for
             </Text>
             <Text
@@ -317,8 +302,7 @@ const RecipeDetailScreen = ({ route }) => {
                 color: colors.yellow,
                 fontWeight: "700",
                 marginLeft: SPACING / 2,
-              }}
-            >
+              }}>
               R {recipe.price * quantity}
             </Text>
           </TouchableOpacity>
