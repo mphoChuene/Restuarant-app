@@ -22,7 +22,9 @@ const ITEM_WIDTH = width / 2 - SPACING * 3;
 
 const HomeScreen = () => {
   const [activeCategory, setActiveCategory] = useState(0);
+  const [cartItemCount, setCartItemCount] = useState(0);
   const navigation = useNavigation();
+
 
   return (
     <SafeAreaView>

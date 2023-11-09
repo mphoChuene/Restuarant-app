@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { removeFromCart } from "../../redux/cartSlice";
+import SPACING from "../../config/SPACING";
+import colors from "../../config/Restaurant/colors";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -45,7 +47,17 @@ const Cart = () => {
           </View>
         ))}
       </ScrollView>
-      <TouchableOpacity onPress={handleCheckout} style={styles.checkoutButton}>
+      <TouchableOpacity
+        onPress={handleCheckout}
+        style={{
+          width: "100%",
+          padding: SPACING * 2,
+          backgroundColor: colors.black,
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: SPACING * 2,
+        }}>
         <Text style={styles.checkoutButtonText}>Checkout</Text>
       </TouchableOpacity>
     </View>
@@ -90,15 +102,16 @@ const styles = StyleSheet.create({
     color: "white",
   },
   checkoutButton: {
-    backgroundColor: "green",
+    backgroundColor: "black",
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 15,
     marginTop: 10,
     alignItems: "center",
   },
   checkoutButtonText: {
-    color: "white",
-    fontWeight: "bold",
+    fontSize: SPACING * 2,
+    color: colors.white,
+    fontWeight: "700",
   },
 });
 
