@@ -1,11 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const cartSlice = createSlice({
-  name: 'cart',
+  name: "cart",
   initialState: { cartItems: [] },
   reducers: {
     addToCart: (state, action) => {
-      const existingItem = state.cartItems.find(item => item.id === action.payload.id);
+      const existingItem = state.cartItems.find(
+        (item) => item.id === action.payload.id
+      );
       if (existingItem) {
         existingItem.quantity += 1; // Increment the quantity if the item already exists in the cart
       } else {
@@ -13,7 +15,9 @@ const cartSlice = createSlice({
       }
     },
     removeFromCart: (state, action) => {
-      const itemIndex = state.cartItems.findIndex(item => item.id === action.payload);
+      const itemIndex = state.cartItems.findIndex(
+        (item) => item.id === action.payload
+      );
       if (itemIndex !== -1) {
         state.cartItems.splice(itemIndex, 1);
       }

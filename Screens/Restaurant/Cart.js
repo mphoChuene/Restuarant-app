@@ -1,6 +1,13 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { removeFromCart } from "../../redux/cartSlice";
 
 const Cart = () => {
@@ -24,10 +31,15 @@ const Cart = () => {
           <View style={styles.cartItem} key={index}>
             <Image source={item.imageUrl} style={styles.image} />
             <View style={styles.prodDetails}>
-              <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 8 }}>{item.name}</Text>
+              <Text
+                style={{ fontSize: 20, fontWeight: "bold", marginBottom: 8 }}>
+                {item.name}
+              </Text>
               <Text>Total Price: R {item.totalPrice}</Text>
             </View>
-            <TouchableOpacity onPress={() => handleDelete(index)} style={styles.deleteButton}>
+            <TouchableOpacity
+              onPress={() => handleDelete(item.id)}
+              style={styles.deleteButton}>
               <Text style={styles.deleteButtonText}>Delete</Text>
             </TouchableOpacity>
           </View>
