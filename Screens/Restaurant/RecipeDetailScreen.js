@@ -47,7 +47,9 @@ const RecipeDetailScreen = ({ route }) => {
       setShowTick(true); // Show the checkmark animation
       setTimeout(() => {
         setShowTick(false);
+        navigation.navigate('Home')
       }, 2000);
+
       setQuantity(1); // Reset the quantity
     } else {
       // Handle the case where quantity is not valid (e.g., non-numeric or <= 0)

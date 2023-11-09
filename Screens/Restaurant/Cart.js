@@ -1,10 +1,20 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { removeFromCart } from "../../redux/cartSlice";
 
 const Cart = () => {
-  // Use the useSelector hook to access the cart state
   const cartItems = useSelector((state) => state.cart.cartItems);
+  const dispatch = useDispatch();
+
+  const handleDelete = (index) => {
+    dispatch(removeFromCart(index));
+  };
+
+  const handleCheckout = () => {
+    // Implement your checkout logic here
+    // This function will be called when the checkout button is pressed
+  };
 
   return (
     <View style={styles.container}>
@@ -12,12 +22,20 @@ const Cart = () => {
       <ScrollView>
         {cartItems.map((item, index) => (
           <View style={styles.cartItem} key={index}>
-            <Text>Name: {item.name}</Text>
-            <Text>Total Price: R {item.totalPrice}</Text>
-            <Image source={{ uri: item.imageUrl }} style={styles.image} />
+            <Image source={item.imageUrl} style={styles.image} />
+            <View style={styles.prodDetails}>
+              <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 8 }}>{item.name}</Text>
+              <Text>Total Price: R {item.totalPrice}</Text>
+            </View>
+            <TouchableOpacity onPress={() => handleDelete(index)} style={styles.deleteButton}>
+              <Text style={styles.deleteButtonText}>Delete</Text>
+            </TouchableOpacity>
           </View>
         ))}
       </ScrollView>
+      <TouchableOpacity onPress={handleCheckout} style={styles.checkoutButton}>
+        <Text style={styles.checkoutButtonText}>Checkout</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -29,18 +47,46 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   cartItem: {
     marginVertical: 8,
-    borderColor: 'lightgray',
+    borderColor: "lightgray",
     borderWidth: 1,
     padding: 8,
+    flex: 1,
+    flexDirection: "row",
   },
   image: {
     width: 100,
     height: 100,
-    resizeMode: 'cover',
+    resizeMode: "cover",
+  },
+  prodDetails: {
+    flex: 1,
+    flexDirection: "column",
+    marginHorizontal: 15,
+  },
+  deleteButton: {
+    backgroundColor: "red",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 5,
+    marginLeft: 10,
+  },
+  deleteButtonText: {
+    color: "white",
+  },
+  checkoutButton: {
+    backgroundColor: "green",
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+    alignItems: "center",
+  },
+  checkoutButtonText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });
 
