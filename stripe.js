@@ -1,12 +1,12 @@
+import React from "react";
 import { useRef } from "react";
-import {
-  Paystack,
-  paystackProps,
-} from "vicreative-react-native-paystack-webview";
+import { Paystack, paystackProps } from "vicreative-react-native-paystack-webview";
 import { View, TouchableOpacity, Text } from "react-native";
+import { useNavigation } from "@react-navigation/native"; // Import useNavigation
 
 export function Payment() {
   const paystackWebViewRef = useRef(paystackProps.PayStackRef);
+  const navigation = useNavigation(); // Initialize the navigation object
 
   return (
     <View style={{ flex: 1 }}>
@@ -22,6 +22,7 @@ export function Payment() {
         }}
         onSuccess={(res) => {
           // handle response here
+          navigation.navigate('Home'); // Use navigation to go to the 'Home' screen
         }}
         ref={paystackWebViewRef}
       />
@@ -34,8 +35,9 @@ export function Payment() {
           padding: 8,
           alignSelf: "center",
           borderRadius: 10,
-        }}>
-        <Text style={{ color: "#fff", textAlign: "center", fontSize:20}}>Pay Now</Text>
+        }}
+      >
+        <Text style={{ color: "#fff", textAlign: "center", fontSize: 20 }}>Pay Now</Text>
       </TouchableOpacity>
     </View>
   );
