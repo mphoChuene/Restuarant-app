@@ -11,6 +11,7 @@ import {
 import { removeFromCart } from "../../redux/cartSlice";
 import SPACING from "../../config/SPACING";
 import colors from "../../config/Restaurant/colors";
+import { Payment } from "../../stripe";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -18,11 +19,6 @@ const Cart = () => {
 
   const handleDelete = (index) => {
     dispatch(removeFromCart(index));
-  };
-
-  const handleCheckout = () => {
-    // Implement your checkout logic here
-    // This function will be called when the checkout button is pressed
   };
 
   return (
@@ -47,19 +43,9 @@ const Cart = () => {
           </View>
         ))}
       </ScrollView>
-      <TouchableOpacity
-        onPress={handleCheckout}
-        style={{
-          width: "100%",
-          padding: SPACING * 2,
-          backgroundColor: colors.black,
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: SPACING * 2,
-        }}>
-        <Text style={styles.checkoutButtonText}>Checkout</Text>
-      </TouchableOpacity>
+      <View style={styles.paymentContainer}>
+        <Payment />
+      </View>
     </View>
   );
 };
@@ -101,17 +87,14 @@ const styles = StyleSheet.create({
   deleteButtonText: {
     color: "white",
   },
-  checkoutButton: {
-    backgroundColor: "black",
-    padding: 10,
-    borderRadius: 15,
-    marginTop: 10,
-    alignItems: "center",
-  },
-  checkoutButtonText: {
-    fontSize: SPACING * 2,
-    color: colors.white,
-    fontWeight: "700",
+  paymentContainer: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    backgroundColor: "white", // Add your desired background color
+    padding: 16,
+    borderTopWidth: 1,
+    borderTopColor: "lightgray",
   },
 });
 
