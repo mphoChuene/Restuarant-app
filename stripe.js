@@ -1,8 +1,11 @@
 import React from "react";
 import { useRef } from "react";
-import { Paystack, paystackProps } from "vicreative-react-native-paystack-webview";
+import {
+  Paystack,
+  paystackProps,
+} from "vicreative-react-native-paystack-webview";
 import { View, TouchableOpacity, Text } from "react-native";
-import { useNavigation } from "@react-navigation/native"; // Import useNavigation
+import { useNavigation } from "@react-navigation/native";
 
 export function Payment() {
   const paystackWebViewRef = useRef(paystackProps.PayStackRef);
@@ -15,14 +18,13 @@ export function Payment() {
         billingEmail="mphochuene42@gmail.com"
         billingName="Mpho"
         currency="ZAR"
-        billingMobile="0658977247"
         amount={"80.00"}
         onCancel={(e) => {
           // handle response here
         }}
         onSuccess={(res) => {
           // handle response here
-          navigation.navigate('Home'); // Use navigation to go to the 'Home' screen
+          navigation.navigate("Home"); // Use navigation to go to the 'Home' screen
         }}
         ref={paystackWebViewRef}
       />
@@ -35,10 +37,16 @@ export function Payment() {
           padding: 8,
           alignSelf: "center",
           borderRadius: 10,
-        }}
-      >
-        <Text style={{ color: "#fff", textAlign: "center", fontSize: 20 }}>Pay Now</Text>
+        }}>
+        <Text style={{ color: "#fff", textAlign: "center", fontSize: 20 }}>
+          Pay Now
+        </Text>
       </TouchableOpacity>
     </View>
   );
 }
+
+// INCASE OF ERRORS APPREAR WHEN RUNNING THE APP, RE-RUN THIS BELOW COMMANDS TO REINSTALL THE PAYSTACK PAYMENT GATEWAY
+
+// npm i vicreative-react-native-paystack-webview
+// expo install react-native-webview

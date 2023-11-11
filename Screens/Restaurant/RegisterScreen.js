@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  ImageBackground,
+} from "react-native";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import app from "../../firebaseConfig"; // Import your Firebase configuration
+import background from "../../assets/restaurant/dish2.jpg";
 
 const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -16,8 +24,8 @@ const RegisterScreen = ({ navigation }) => {
         return;
       }
 
-      const auth = getAuth(app); // Obtain the auth instance
-      await createUserWithEmailAndPassword(auth, email, password); // Use createUserWithEmailAndPassword from auth
+      const auth = getAuth(app);
+      await createUserWithEmailAndPassword(auth, email, password);
       navigation.navigate("Login");
     } catch (error) {
       setError(error.message);
@@ -25,77 +33,115 @@ const RegisterScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        placeholder="Email"
-        style={styles.textInput}
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-      />
-      <TextInput
-        placeholder="Password"
-        style={styles.textInput}
-        secureTextEntry
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-      />
-      <TextInput
-        placeholder="Confirm Password"
-        style={styles.textInput}
-        secureTextEntry
-        value={confirmPassword}
-        onChangeText={(text) => setConfirmPassword(text)}
-      />
-      {error && <Text style={styles.errorText}>{error}</Text>}
-      <TouchableOpacity style={styles.button} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Register</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.loginButton}
-        onPress={() => navigation.navigate("Login")}
-      >
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-    </View>
+    <ImageBackground source={background} style={styles.backgroundImage}>
+      <View style={styles.container}>
+        <View style={styles.textContainer}>
+          <Text style={styles.welcomeText}>Welcome to</Text>
+          <Text style={styles.luxeCuisineText}>Luxe Cuisine</Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Email"
+            style={styles.textInput}
+            placeholderTextColor="#ddd" // Adjust placeholder text color
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+          />
+          <TextInput
+            placeholder="Password"
+            style={styles.textInput}
+            placeholderTextColor="#ddd" // Adjust placeholder text color
+            secureTextEntry
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+          />
+          <TextInput
+            placeholder="Confirm Password"
+            style={styles.textInput}
+            placeholderTextColor="#ddd" // Adjust placeholder text color
+            secureTextEntry
+            value={confirmPassword}
+            onChangeText={(text) => setConfirmPassword(text)}
+          />
+        </View>
+        {error && <Text style={styles.errorText}>{error}</Text>}
+        <TouchableOpacity style={styles.button} onPress={handleRegister}>
+          <Text style={styles.buttonText}>Register</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.loginButton}
+          onPress={() => navigation.navigate("Login")}>
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-end", // Move the content to the bottom
     alignItems: "center",
+  },
+  textContainer: {
+    position: "absolute",
+    top: 50,
+    alignItems: "center",
+    width: "100%",
+  },
+  welcomeText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  luxeCuisineText: {
+    fontSize: 36,
+    fontWeight: "normal",
+    color: "#fff",
+    marginBottom: 20,
+  },
+  inputContainer: {
+    width: "100%", // Take full width
+    paddingHorizontal: 20,
   },
   textInput: {
-    width: 200,
+    width: "100%",
     height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
+    borderColor: "white",
+    borderBottomWidth: 1,
     marginBottom: 10,
     padding: 8,
+    color: "#fff",
   },
   button: {
-    backgroundColor: "blue",
-    padding: 10,
+    backgroundColor: "#000",
+    padding: 15,
     borderRadius: 5,
-    width: 200,
+    width: "90%",
     alignItems: "center",
+    marginVertical: 10,
   },
   loginButton: {
-    backgroundColor: "purple",
-    padding: 10,
+    backgroundColor: "#00f",
+    padding: 15,
     borderRadius: 5,
-    width: 200,
+    width: "90%",
     alignItems: "center",
-    marginTop: 10,
+    marginBottom: 25,
   },
   buttonText: {
-    color: "white",
+    color: "#fff",
     fontWeight: "bold",
   },
   errorText: {
     color: "red",
     marginBottom: 10,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
   },
 });
 
