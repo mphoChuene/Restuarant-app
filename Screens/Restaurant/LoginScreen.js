@@ -23,7 +23,7 @@ const LoginScreen = ({ navigation }) => {
     try {
       const auth = getAuth(app);
       await signInWithEmailAndPassword(auth, email, password);
-      navigation.navigate("welcomeScreen");
+      navigation.navigate("Home");
     } catch (error) {
       setError(error.message);
     }

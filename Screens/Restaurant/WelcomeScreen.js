@@ -15,7 +15,7 @@ const WelcomeScreen = () => {
 
   const handleOrderNow = () => {
     // Navigate to the HomeScreen when the button is clicked
-    navigation.navigate("Home");
+    navigation.navigate("Login");
   };
 
   return (
