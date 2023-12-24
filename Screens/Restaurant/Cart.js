@@ -16,13 +16,12 @@ import { Payment } from "../../stripe";
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
-  const totalAmount = useSelector((state) =>
-    calculateTotalAmount(state.cart.cartItems)
-  );
 
   const handleDelete = (index) => {
     dispatch(removeFromCart(index));
   };
+
+  const totalAmount = cartItems.reduce((total, item) => total + item.price, 0);
 
   return (
     <View style={styles.container}>
@@ -47,16 +46,14 @@ const Cart = () => {
           </View>
         ))}
       </ScrollView>
+      <View style={styles.total}>
+        <Text style={styles.subTotal}>Total: R{totalAmount}</Text>
+      </View>
       <View style={styles.paymentContainer}>
-        <Payment calculateTotalAmount={calculateTotalAmount} />
+        <Payment totalAmount={totalAmount} />
       </View>
     </View>
   );
-};
-const calculateTotalAmount = (cartItems) => {
-  // Implement your logic to calculate the total amount
-  // Iterate through cart items and sum the totalPrice of each item
-  return cartItems.reduce((total, item) => total + item.totalPrice, 0);
 };
 
 const styles = StyleSheet.create({
@@ -104,6 +101,16 @@ const styles = StyleSheet.create({
     padding: 16,
     borderTopWidth: 1,
     borderTopColor: "lightgray",
+  },
+  total: {
+    position: "absolute",
+    top: "90%",
+    left: "60%",
+  },
+
+  subTotal: {
+    fontSize: 24,
+    fontWeight: "bold",
   },
 });
 

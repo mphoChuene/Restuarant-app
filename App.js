@@ -22,7 +22,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Provider store={store}>
-        <HomeStack.Navigator initialRouteName="welcomeScreen">
+        <HomeStack.Navigator initialRouteName="Home">
           <HomeStack.Screen name="welcomeScreen" component={WelcomeScreen} />
           <HomeStack.Screen name="Login" component={LoginScreen} />
           <HomeStack.Screen name="Register" component={RegisterScreen} />

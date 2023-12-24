@@ -7,7 +7,7 @@ import {
 import { View, TouchableOpacity, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-export function Payment() {
+export function Payment({ totalAmount }) {
   const paystackWebViewRef = useRef(paystackProps.PayStackRef);
   const navigation = useNavigation(); // Initialize the navigation object
 
@@ -18,7 +18,7 @@ export function Payment() {
         billingEmail="mphochuene42@gmail.com"
         billingName="Mpho"
         currency="ZAR"
-        amount={calculateTotalAmount.toString()}
+        amount={totalAmount.toFixed(2)}
         onCancel={(e) => {
           // handle response here
         }}
