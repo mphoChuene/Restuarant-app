@@ -16,6 +16,9 @@ import { Payment } from "../../stripe";
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
+  const totalAmount = useSelector((state) =>
+    calculateTotalAmount(state.cart.cartItems)
+  );
 
   const handleDelete = (index) => {
     dispatch(removeFromCart(index));
@@ -25,15 +28,16 @@ const Cart = () => {
     <View style={styles.container}>
       <Text style={styles.heading}>Cart</Text>
       <ScrollView>
-        {cartItems.map((item, index) => (
-          <View style={styles.cartItem} key={index}>
+        {cartItems.map((item) => (
+          <View style={styles.cartItem} key={item.id}>
             <Image source={item.imageUrl} style={styles.image} />
             <View style={styles.prodDetails}>
               <Text
                 style={{ fontSize: 20, fontWeight: "bold", marginBottom: 8 }}>
                 {item.name}
               </Text>
-              <Text>Total Price: R {item.totalPrice}</Text>
+              <Text>quantity: {item.quantity}</Text>
+              <Text>Price: R {item.price}</Text>
             </View>
             <TouchableOpacity
               onPress={() => handleDelete(item.id)}
@@ -44,10 +48,15 @@ const Cart = () => {
         ))}
       </ScrollView>
       <View style={styles.paymentContainer}>
-        <Payment />
+        <Payment calculateTotalAmount={calculateTotalAmount} />
       </View>
     </View>
   );
+};
+const calculateTotalAmount = (cartItems) => {
+  // Implement your logic to calculate the total amount
+  // Iterate through cart items and sum the totalPrice of each item
+  return cartItems.reduce((total, item) => total + item.totalPrice, 0);
 };
 
 const styles = StyleSheet.create({

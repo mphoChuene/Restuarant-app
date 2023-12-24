@@ -18,7 +18,7 @@ export function Payment() {
         billingEmail="mphochuene42@gmail.com"
         billingName="Mpho"
         currency="ZAR"
-        amount={"80.00"}
+        amount={calculateTotalAmount.toString()}
         onCancel={(e) => {
           // handle response here
         }}

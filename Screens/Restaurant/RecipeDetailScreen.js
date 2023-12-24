@@ -28,31 +28,37 @@ const RecipeDetailScreen = ({ route }) => {
 
   const dispatch = useDispatch();
   const handleAddToCart = () => {
-    // Ensure quantity is a positive integer
     const quantityInt = parseInt(quantity);
     if (quantityInt > 0) {
-      // Calculate the total price based on quantity
       const totalPrice = recipe.price * quantityInt;
 
-      // Create an item object with name, total price, and image URL
-      const order = {
-        name: recipe.name,
-        totalPrice,
-        imageUrl: recipe.image, // Replace this with the actual image URL
-      };
+      // const order = {
+      //   id: recipe.id, // Use a unique identifier for each item
+      //   name: recipe.name,
+      //   price: totalPrice,
+      //   imageUrl: recipe.image,
+      //   quantity: quantityInt,
+      // };
 
-      // Dispatch the addToCart action to add the item to the cart
-      dispatch(addToCart(order));
+      dispatch(
+        addToCart({
+          id: recipe.id, // Use a unique identifier for each item
+          name: recipe.name,
+          price: totalPrice,
+          imageUrl: recipe.image,
+          quantity: quantityInt,
+        })
+      );
 
-      setShowTick(true); // Show the checkmark animation
+      setShowTick(true);
       setTimeout(() => {
         setShowTick(false);
-        navigation.navigate("Home");
+        // Comment out or modify the navigation code based on your app's navigation flow
+        navigation.navigate("Cart");
       }, 2000);
 
-      setQuantity(1); // Reset the quantity
+      // setQuantity(1);
     } else {
-      // Handle the case where quantity is not valid (e.g., non-numeric or <= 0)
       console.error("Invalid quantity");
     }
   };
