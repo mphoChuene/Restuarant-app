@@ -23,7 +23,9 @@ const LoginScreen = ({ navigation }) => {
     try {
       const auth = getAuth(app);
       await signInWithEmailAndPassword(auth, email, password);
-      navigation.navigate("Home");
+      if (email === "Admin@gmail.com") {
+        navigation.navigate("Admin");
+      } else navigation.navigate("Home");
     } catch (error) {
       setError(error.message);
     }

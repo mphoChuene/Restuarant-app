@@ -10,6 +10,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import cartReducer from "./redux/cartSlice";
 import RegisterScreen from "./Screens/Restaurant/RegisterScreen";
+import AdminScreen from "./Screens/Restaurant/AdminScreen";
 
 const HomeStack = createStackNavigator();
 const store = configureStore({
@@ -22,7 +23,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Provider store={store}>
-        <HomeStack.Navigator initialRouteName="welcomeScreen">
+        <HomeStack.Navigator initialRouteName="Admin">
           <HomeStack.Screen name="welcomeScreen" component={WelcomeScreen} />
           <HomeStack.Screen name="Login" component={LoginScreen} />
           <HomeStack.Screen name="Register" component={RegisterScreen} />
@@ -32,6 +33,7 @@ const App = () => {
             name="ProductDetails"
             component={RecipeDetailScreen}
           />
+          <HomeStack.Screen name="Admin" component={AdminScreen} />
           {/* Define other screens here if needed */}
         </HomeStack.Navigator>
       </Provider>
