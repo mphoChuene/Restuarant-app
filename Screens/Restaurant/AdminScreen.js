@@ -1,33 +1,25 @@
+import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-// import { BottomNavigation } from "react-native-material-ui";
-import { Avatar } from "react-native-material-ui";
 import { AntDesign, Ionicons, FontAwesome5 } from "@expo/vector-icons";
-import React, { useState } from "react";
-
-// import RestoreIcon from "@mui/icons-material/Restore";
-// import FavoriteIcon from "@mui/icons-material/Favorite";
-// import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const AdminScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>AdminScreen</Text>
-
-      {/* <Avatar icon="person" iconColor="blue" /> */}
+      <Text style={styles.headerText}>Admin Screen</Text>
       <View style={styles.subcontainer}>
-        <Text>My DESCRIPTION</Text>
+        <Text style={styles.descriptionText}>My DESCRIPTION</Text>
         <View style={styles.cardContainer}>
           <TouchableOpacity style={styles.card}>
-            <Text>Orders</Text>
             <Ionicons name="fast-food" size={24} color="black" />
+            <Text style={styles.cardText}>Orders</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.card}>
-            <Text>Messages</Text>
             <AntDesign name="mail" size={24} color="black" />
+            <Text style={styles.cardText}>Messages</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.card}>
-            <Text>Customers</Text>
             <FontAwesome5 name="users" size={24} color="black" />
+            <Text style={styles.cardText}>Customers</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -35,43 +27,46 @@ const AdminScreen = () => {
   );
 };
 
-export default AdminScreen;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "dodgerblue",
-    display: "flex",
+    backgroundColor: "#3498db",
     justifyContent: "center",
     alignItems: "center",
+  },
+  headerText: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#fff",
+    marginBottom: 20,
   },
   subcontainer: {
-    // flex: 1,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-    height: 600,
-    width: 400,
+    backgroundColor: "#fff",
+    padding: 20,
     borderRadius: 20,
+    width: "80%",
   },
-
+  descriptionText: {
+    fontSize: 16,
+    marginBottom: 20,
+  },
   cardContainer: {
-    backgroundColor: "blue",
-    // flex: 1,
-    width: 350,
-    display: "flex",
-    justifyContent: "center",
-    // alignItems:'center'
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
   card: {
-    // flex: 1,
-    display:'flex',
-    flexDirection:'row',
-    justifyContent:'space-around',
-    alignItems:'center',
-    backgroundColor: "red",
-    height: 62,
-    marginVertical: 10,
+    // flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#ecf0f1",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  cardText: {
+    marginLeft: 10,
+    fontSize: 16,
   },
 });
+
+export default AdminScreen;
