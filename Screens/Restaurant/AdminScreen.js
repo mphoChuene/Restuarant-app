@@ -1,23 +1,39 @@
-import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { AntDesign, Ionicons, FontAwesome5 } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const AdminScreen = () => {
+  const navigation = useNavigation();
+
+  const handleOrders = () => {
+    navigation.navigate("Orders");
+  };
+
+  const handleMessages = () => {
+    // Add navigation logic for the "Messages" screen
+    navigation.navigate("Messages");
+  };
+
+  const handleCustomers = () => {
+    // Add navigation logic for the "Customers" screen
+    navigation.navigate("Customers");
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Admin Screen</Text>
       <View style={styles.subcontainer}>
-        <Text style={styles.descriptionText}>My DESCRIPTION</Text>
+        <Text style={styles.descriptionText}>Restaurant-App</Text>
         <View style={styles.cardContainer}>
-          <TouchableOpacity style={styles.card}>
+          <TouchableOpacity style={styles.card} onPress={handleOrders}>
             <Ionicons name="fast-food" size={24} color="black" />
             <Text style={styles.cardText}>Orders</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.card}>
+          <TouchableOpacity style={styles.card} onPress={handleMessages}>
             <AntDesign name="mail" size={24} color="black" />
             <Text style={styles.cardText}>Messages</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.card}>
+          <TouchableOpacity style={styles.card} onPress={handleCustomers}>
             <FontAwesome5 name="users" size={24} color="black" />
             <Text style={styles.cardText}>Customers</Text>
           </TouchableOpacity>
@@ -55,7 +71,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   card: {
-    // flexDirection: "row",
     alignItems: "center",
     backgroundColor: "#ecf0f1",
     paddingVertical: 10,

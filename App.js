@@ -11,6 +11,9 @@ import { Provider } from "react-redux";
 import cartReducer from "./redux/cartSlice";
 import RegisterScreen from "./Screens/Restaurant/RegisterScreen";
 import AdminScreen from "./Screens/Restaurant/AdminScreen";
+import Customers from "./Screens/Restaurant/Customers";
+import Orders from "./Screens/Restaurant/Orders";
+import Messages from "./Screens/Restaurant/Messages";
 
 const HomeStack = createStackNavigator();
 const store = configureStore({
@@ -34,6 +37,9 @@ const App = () => {
             component={RecipeDetailScreen}
           />
           <HomeStack.Screen name="Admin" component={AdminScreen} />
+          <HomeStack.Screen name="Customers" component={Customers} />
+          <HomeStack.Screen name="Orders" component={Orders} />
+          <HomeStack.Screen name="Messages" component={Messages} />
           {/* Define other screens here if needed */}
         </HomeStack.Navigator>
       </Provider>
