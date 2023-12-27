@@ -1,6 +1,13 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { AntDesign, Ionicons, FontAwesome5 } from "@expo/vector-icons";
+import {
+  AntDesign,
+  Ionicons,
+  FontAwesome5,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { auth } from "../../firebaseConfig";
+import { Badge } from "react-native-material-ui";
 
 const AdminScreen = () => {
   const navigation = useNavigation();
@@ -19,6 +26,15 @@ const AdminScreen = () => {
     navigation.navigate("Customers");
   };
 
+  const handleSignout = async () => {
+    try {
+      await auth.signOut();
+      navigation.navigate("Login");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Admin Screen</Text>
@@ -30,7 +46,9 @@ const AdminScreen = () => {
             <Text style={styles.cardText}>Orders</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.card} onPress={handleMessages}>
-            <AntDesign name="mail" size={24} color="black" />
+            <Badge text="1">
+              <AntDesign name="mail" size={24} color="black" />
+            </Badge>
             <Text style={styles.cardText}>Messages</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.card} onPress={handleCustomers}>
@@ -38,6 +56,10 @@ const AdminScreen = () => {
             <Text style={styles.cardText}>Customers</Text>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity style={styles.card1} onPress={handleSignout}>
+          <MaterialCommunityIcons name="exit-run" size={24} color="black" />
+          <Text style={styles.cardText}>Sign-out</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -72,6 +94,16 @@ const styles = StyleSheet.create({
   },
   card: {
     alignItems: "center",
+    backgroundColor: "#ecf0f1",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  card1: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: "#ecf0f1",
     paddingVertical: 10,
     paddingHorizontal: 15,

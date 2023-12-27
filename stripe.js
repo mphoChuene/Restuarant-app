@@ -6,10 +6,23 @@ import {
 } from "vicreative-react-native-paystack-webview";
 import { View, TouchableOpacity, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
+import { addOrder } from "./redux/orderSlice";
+import { clearCart } from "./redux/cartSlice";
 
-export function Payment({ totalAmount }) {
+export function Payment({ totalAmount, cartItems }) {
   const paystackWebViewRef = useRef(paystackProps.PayStackRef);
   const navigation = useNavigation(); // Initialize the navigation object
+  const dispatch = useDispatch();
+
+  const handleComplete = () => {
+    const { items } = cartItems;
+    // Dispatch an action to add the order to the order store
+    dispatch(addOrder({ items: items, totalAmount }));
+    // You may want to reset the cart after the order is completed
+    dispatch(clearCart()); // Clear the cart or dispatch other necessary actions
+    navigation.navigate("Home"); // Use navigation to go to the 'Home' screen
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -24,7 +37,7 @@ export function Payment({ totalAmount }) {
         }}
         onSuccess={(res) => {
           // handle response here
-          navigation.navigate("Home"); // Use navigation to go to the 'Home' screen
+          handleComplete();
         }}
         ref={paystackWebViewRef}
       />

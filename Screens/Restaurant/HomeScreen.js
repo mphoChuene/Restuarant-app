@@ -20,6 +20,7 @@ import colors from "../../config/Restaurant/colors";
 import DATA from "../../config/Restaurant/DATA";
 import { useDispatch, useSelector } from "react-redux"; // Add these imports
 import { addToCart, removeFromCart } from "../../redux/cartSlice"; // Replace with the correct path
+import { auth } from "../../firebaseConfig";
 
 const { width } = Dimensions.get("window");
 const ITEM_WIDTH = width / 2 - SPACING * 3;
@@ -61,7 +62,7 @@ const HomeScreen = () => {
                   fontWeight: "800",
                   color: colors.dark,
                 }}>
-                Mpho Chuene
+                {auth.currentUser.email}
               </Text>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -173,7 +174,7 @@ const HomeScreen = () => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-  Badge:{
-  color:'red'
-  }
+  Badge: {
+    color: "red",
+  },
 });

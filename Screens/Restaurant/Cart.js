@@ -8,7 +8,9 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { removeFromCart } from "../../redux/cartSlice";
+// import { removeFromCart } from "../../redux/cartSlice";
+import { removeFromCart, clearCart } from "../../redux/cartSlice";
+import { addOrder } from "../../redux/orderSlice";
 import SPACING from "../../config/SPACING";
 import colors from "../../config/Restaurant/colors";
 import { Payment } from "../../stripe";
@@ -50,7 +52,11 @@ const Cart = () => {
         <Text style={styles.subTotal}>Total: R{totalAmount}</Text>
       </View>
       <View style={styles.paymentContainer}>
-        <Payment totalAmount={totalAmount} />
+        <Payment
+          totalAmount={totalAmount}
+          cartItems={cartItems}
+          clearCart={clearCart}
+        />
       </View>
     </View>
   );
@@ -111,6 +117,18 @@ const styles = StyleSheet.create({
   subTotal: {
     fontSize: 24,
     fontWeight: "bold",
+  },
+  completePurchaseButton: {
+    backgroundColor: colors.primary, // Customize the button color
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 16,
+    alignItems: "center",
+  },
+  completePurchaseButtonText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });
 

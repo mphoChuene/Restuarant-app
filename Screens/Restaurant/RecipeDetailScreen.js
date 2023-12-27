@@ -54,7 +54,7 @@ const RecipeDetailScreen = ({ route }) => {
       setTimeout(() => {
         setShowTick(false);
         // Comment out or modify the navigation code based on your app's navigation flow
-        navigation.navigate("Cart");
+        navigation.navigate("Home");
       }, 2000);
 
       // setQuantity(1);

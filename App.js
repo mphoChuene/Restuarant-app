@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import CartScreen from "./Screens/Restaurant/Cart";
@@ -8,17 +8,19 @@ import RecipeDetailScreen from "./Screens/Restaurant/RecipeDetailScreen";
 import LoginScreen from "./Screens/Restaurant/LoginScreen";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import cartReducer from "./redux/cartSlice";
 import RegisterScreen from "./Screens/Restaurant/RegisterScreen";
 import AdminScreen from "./Screens/Restaurant/AdminScreen";
 import Customers from "./Screens/Restaurant/Customers";
 import Orders from "./Screens/Restaurant/Orders";
 import Messages from "./Screens/Restaurant/Messages";
+import cartReducer from "./redux/cartSlice";
+import orderReducer from "./redux/orderSlice";
 
 const HomeStack = createStackNavigator();
 const store = configureStore({
   reducer: {
     cart: cartReducer,
+    orders: orderReducer,
   },
 });
 
@@ -26,7 +28,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Provider store={store}>
-        <HomeStack.Navigator initialRouteName="Admin">
+        <HomeStack.Navigator initialRouteName="welcomeScreen">
           <HomeStack.Screen name="welcomeScreen" component={WelcomeScreen} />
           <HomeStack.Screen name="Login" component={LoginScreen} />
           <HomeStack.Screen name="Register" component={RegisterScreen} />
