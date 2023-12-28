@@ -14,14 +14,28 @@ export function Payment({ totalAmount, cartItems }) {
   const paystackWebViewRef = useRef(paystackProps.PayStackRef);
   const navigation = useNavigation(); // Initialize the navigation object
   const dispatch = useDispatch();
-
   const handleComplete = () => {
-    const { items } = cartItems;
-    // Dispatch an action to add the order to the order store
-    dispatch(addOrder({ items: items, totalAmount }));
-    // You may want to reset the cart after the order is completed
-    dispatch(clearCart()); // Clear the cart or dispatch other necessary actions
-    navigation.navigate("Home"); // Use navigation to go to the 'Home' screen
+    console.log("cartItems:", cartItems);
+
+    if (Array.isArray(cartItems)) {
+      console.log("cartItems is an array");
+
+      if (cartItems.length > 0) {
+        console.log("cartItems has items");
+
+        // Dispatch an action to add the order to the order store
+        dispatch(addOrder(cartItems));
+
+        // ... other actions
+
+        dispatch(clearCart()); // Assuming you have a clearCart action in your cartSlice
+        navigation.navigate("Home");
+      } else {
+        console.error("cartItems is an empty array");
+      }
+    } else {
+      console.error("cartItems is not an array");
+    }
   };
 
   return (

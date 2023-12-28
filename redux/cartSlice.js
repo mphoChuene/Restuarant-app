@@ -14,8 +14,8 @@ const cartSlice = createSlice({
           item.id === id
             ? {
                 ...item,
-                quantity: item.quantity + item.quantity,
-                price: item.price + item.price,
+                quantity: item.quantity + quantity,
+                price: item.price + price,
               }
             : item
         );

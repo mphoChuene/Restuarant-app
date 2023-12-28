@@ -24,9 +24,17 @@ const Orders = () => {
     <View style={styles.container}>
       <Text style={styles.header}>Order Details</Text>
       <ScrollView contentContainerStyle={styles.scrollView}>
-        {orderItems.map((item) => (
-          <View style={styles.cartItem} key={item.id}>
-            <Image source={{ uri: item.imageUrl }} style={styles.image} />
+        {orderItems.map((item, index) => (
+          <View style={styles.cartItem} key={item.id || index}>
+            {item.imageUrl && typeof item.imageUrl === "number" ? (
+              <Image
+                source={{ uri: String(item.imageUrl) }}
+                style={styles.image}
+              />
+            ) : (
+              <Text>No Image</Text>
+            )}
+
             <View style={styles.prodDetails}>
               <Text style={styles.productName}>{item.name}</Text>
               <Text>Quantity: {item.quantity}</Text>
