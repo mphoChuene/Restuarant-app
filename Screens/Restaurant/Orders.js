@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -8,13 +7,11 @@ import {
   View,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { addOrder, removeOrder, clearOrders } from "../../redux/orderSlice"; // Import your action to remove from the order
+import { removeOrder } from "../../redux/orderSlice";
 
 const Orders = () => {
   const orderItems = useSelector((state) => state.orders.orderItems);
   const dispatch = useDispatch();
-
-  console.log(orderItems);
 
   const handleDelete = (itemId) => {
     dispatch(removeOrder(itemId));
@@ -26,15 +23,6 @@ const Orders = () => {
       <ScrollView contentContainerStyle={styles.scrollView}>
         {orderItems.map((item, index) => (
           <View style={styles.cartItem} key={item.id || index}>
-            {item.imageUrl && typeof item.imageUrl === "number" ? (
-              <Image
-                source={{ uri: String(item.imageUrl) }}
-                style={styles.image}
-              />
-            ) : (
-              <Text>No Image</Text>
-            )}
-
             <View style={styles.prodDetails}>
               <Text style={styles.productName}>{item.name}</Text>
               <Text>Quantity: {item.quantity}</Text>
@@ -76,12 +64,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     padding: 12,
     elevation: 2,
-  },
-  image: {
-    width: 80,
-    height: 80,
-    borderRadius: 8,
-    marginRight: 12,
   },
   prodDetails: {
     flex: 1,

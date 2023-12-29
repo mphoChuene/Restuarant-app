@@ -1,14 +1,31 @@
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { MaterialIcons } from "@expo/vector-icons";
+
+
 
 const Customers = () => {
   return (
-    <View>
-      <Text>this is the customer screen</Text>
+    <View style={styles.container}>
+      <MaterialIcons name="construction" size={80} color="orange" />
+      <Text style={styles.message}>
+        The following feature is under experimentation.
+      </Text>
     </View>
   );
 };
 
-export default Customers;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  message: {
+    fontSize: 18,
+    textAlign: "center",
+    marginTop: 20,
+  },
+});
 
-const styles = StyleSheet.create({});
+export default Customers;

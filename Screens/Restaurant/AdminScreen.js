@@ -8,9 +8,12 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../../firebaseConfig";
 import { Badge } from "react-native-material-ui";
+import { useSelector } from "react-redux";
 
 const AdminScreen = () => {
   const navigation = useNavigation();
+
+  const orderItems = useSelector((state) => state.orders.orderItems);
 
   const handleOrders = () => {
     navigation.navigate("Orders");
@@ -42,13 +45,14 @@ const AdminScreen = () => {
         <Text style={styles.descriptionText}>Restaurant-App</Text>
         <View style={styles.cardContainer}>
           <TouchableOpacity style={styles.card} onPress={handleOrders}>
-            <Ionicons name="fast-food" size={24} color="black" />
+            <Badge text={orderItems.length.toString()}>
+              <Ionicons name="fast-food" size={24} color="black" />
+            </Badge>
             <Text style={styles.cardText}>Orders</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.card} onPress={handleMessages}>
-            <Badge text="1">
-              <AntDesign name="mail" size={24} color="black" />
-            </Badge>
+            <AntDesign name="mail" size={24} color="black" />
+
             <Text style={styles.cardText}>Messages</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.card} onPress={handleCustomers}>
